@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,21 +19,54 @@ import org.json.JSONObject;
 
 public class MainFragment extends Fragment{
 
-
+    private String jsonString;
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
 //        Create Toolbar
-        Toolbar toolbar = getView().findViewById(R.id.toolbarMain);
-
+        createToolbar();
 
 //        Show Rate
         showRate();
 
 
     }   // Main Method
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.item_calculate) {
+//            Replace Fragment
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.contentMainFragment, CalculateFragment.calculateInstance(jsonString))
+                    .addToBackStack(null)
+                    .commit();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_main, menu);
+    }
+
+    private void createToolbar() {
+        Toolbar toolbar = getView().findViewById(R.id.toolbarMain);
+        ((MainActivity)getActivity()).setSupportActionBar(toolbar);
+
+//        Setup Title
+        ((MainActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.title_th));
+        ((MainActivity) getActivity()).getSupportActionBar().setSubtitle("USD ==> THB");
+
+        setHasOptionsMenu(true);
+
+    }
 
     private void showRate() {
 
@@ -40,7 +76,7 @@ public class MainFragment extends Fragment{
 
             GetCurrentMoneyRate getCurrentMoneyRate = new GetCurrentMoneyRate(getActivity());
             getCurrentMoneyRate.execute(urlAPI);
-            String jsonString = getCurrentMoneyRate.get();
+            jsonString = getCurrentMoneyRate.get();
             String forDateString = jsonString;
             Log.d("31MachV1", "json0 ==> " + jsonString);
 

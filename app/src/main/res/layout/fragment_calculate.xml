@@ -5,6 +5,7 @@
 
     <!--Toolbar-->
     <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarCalculate"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:background="@color/colorPrimary"
         android:layout_width="match_parent"
@@ -35,6 +36,7 @@
 
             <!--TextField-->
             <EditText
+                android:id="@+id/edtMoney"
                 android:inputType="numberDecimal"
                 android:hint="Money in USD :"
                 android:layout_width="match_parent"
@@ -44,6 +46,7 @@
 
         <!--Exchange Button-->
         <Button
+            android:id="@+id/btnExchange"
             android:text="Exchange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
