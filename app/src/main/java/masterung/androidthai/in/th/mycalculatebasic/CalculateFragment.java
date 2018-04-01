@@ -11,13 +11,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class CalculateFragment extends Fragment{
 
     //    Explicit
     private String factorString;
+    private ArrayList<String> stringArrayList;
 
 
     public static CalculateFragment calculateInstance(String factorSting) {
@@ -35,6 +43,9 @@ public class CalculateFragment extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+//        Setup ArrayList
+        stringArrayList = new ArrayList<>();
 
 //        Get Value from Argument
         factorString = getArguments().getString("Factor");
@@ -93,6 +104,25 @@ public class CalculateFragment extends Fragment{
                             thbString + "THB.");
 
 
+//                    Create ListView
+                    Calendar calendar = Calendar.getInstance();
+                    DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy HH:MM:ss");
+                    String dateString = dateFormat.format(calendar.getTime());
+                    Log.d("1AprilV2", "Date ==> " + dateString);
+
+                    String listString = dateString +
+                            "\n" +
+                            usdString +
+                            " X " +
+                            factorString +
+                            " = " +
+                            thbString;
+
+                    stringArrayList.add(listString);
+                    Log.d("1AprilV2", "Current ArrayList ==> " + stringArrayList.toString());
+
+                    createListView();
+
 
 
                 }   // if
@@ -101,6 +131,24 @@ public class CalculateFragment extends Fragment{
 
             }
         });
+
+    }
+
+    private void createListView() {
+
+        ListView listView = getView().findViewById(R.id.listViewExchange);
+        String resultString = stringArrayList.toString();
+        resultString = resultString.substring(1, resultString.length() - 1);
+        String[] strings = resultString.split(",");
+
+        for (int i=0; i<strings.length; i+=1) {
+            Log.d("1AprilV2", "strings[" + i + "] ==> " + strings[i]);
+        }
+
+        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_list_item_1, strings);
+        listView.setAdapter(stringArrayAdapter);
+
 
     }
 
