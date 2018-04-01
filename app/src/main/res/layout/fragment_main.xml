@@ -3,6 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--Toolbar-->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMain"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+
+    <!--Content-->
     <LinearLayout
         android:background="#b4ffffff"
         android:padding="15dp"
@@ -37,6 +46,17 @@
             android:layout_gravity="center_horizontal"
             android:textSize="40sp"
             android:text="1 --> 90"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--date-->
+        <TextView
+            android:id="@+id/txtShowDate"
+            android:textColor="#e63636"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="italic"
+            android:textSize="18sp"
+            android:text="dd-MM-yyyy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
